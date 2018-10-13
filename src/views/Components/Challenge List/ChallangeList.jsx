@@ -10,6 +10,10 @@ import Card from "@material-ui/core/Card/Card";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Typography from "@material-ui/core/Typography/Typography";
 import Button from "@material-ui/core/Button/Button";
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   root: {
@@ -23,6 +27,14 @@ const styles = theme => ({
   challengeList: {
     maxWidth: "none",
     width: "100%"
+  },
+  fab: {
+    margin: theme.spacing.unit * 2
+  },
+  absolute: {
+    position: "absolute",
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3
   }
 });
 
@@ -71,14 +83,35 @@ class ChallengeList extends React.Component {
                   <StarBorder />
                 </ListItemIcon>
                 <ListItemText inset primary="Challenge 1" />
+                <Tooltip title="Delete">
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Add">
+                  <IconButton aria-label="Add">
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
               </ListItem>
             </Button>
+
             <Button onClick={this.handleClick} href="http://www.google.com">
               <ListItem button>
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
                 <ListItemText inset primary="Challenge 2" />
+                <Tooltip title="Delete">
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Add">
+                  <IconButton aria-label="Add">
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
               </ListItem>
             </Button>
             <Button onClick={this.handleClick} href="http://www.google.com">
@@ -87,6 +120,16 @@ class ChallengeList extends React.Component {
                   <StarBorder />
                 </ListItemIcon>
                 <ListItemText inset primary="Challenge 3" />
+                <Tooltip title="Delete">
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Add">
+                  <IconButton aria-label="Add">
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
               </ListItem>
             </Button>
             {/* <ListItem button onClick={this.handleClick} /> */}
