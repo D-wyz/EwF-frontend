@@ -1,28 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Landing from './views/LandingPage/LandingPage'
+import React, { Component } from "react";
+import Header from "./views/Components/Header/Header";
+import ProfileCard from "./views/Components/ProfileCard/ProfileCard";
+import ChallengeList from "./views/Components/Challenge List/ChallangeList";
+import ScoreboardList from "./views/Components/Scoreboard List/ScoreboardList";
+
+import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <Landing />
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <p>
-      //       Edit <code>src/App.js</code> and save to reload.
-      //     </p>
-      //     <a
-      //       className="App-link"
-      //       href="https://reactjs.org"
-      //       target="_blank"
-      //       rel="noopener noreferrer"
-      //     >
-      //       Learn React
-      //     </a>
-      //   </header>
-      // </div>
+      <div className="App">
+        <Header />
+        <ProfileCard />
+        <ChallengeList />
+        <ScoreboardList />
+      </div>
     );
   }
 }
