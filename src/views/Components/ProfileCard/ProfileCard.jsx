@@ -10,8 +10,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 const styles = {
   card: {
-    maxWidth: 350,
-    margin: 50,
+    width: 351,
+    margin: 20,
     display: "grid",
     justify: "right",
     alignItems: "flex-end",
@@ -23,18 +23,17 @@ const styles = {
     // justify: "center",
     // alignContent: "flex-end",
     // alignContent: "flex-end"
+  },
+  button: {
+    color: "red",
+    width: 332
   }
 };
 function MediaCard(props) {
   const { classes } = props;
   return (
-    <div style={{ marginLeft: 975 }}>
-      <Card
-        className={classes.card}
-        margin="30px"
-        maxWidth="100%"
-        maxHeight="100%"
-      >
+    <div>
+      <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
@@ -42,16 +41,21 @@ function MediaCard(props) {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography gutterBottom variant="display2" component="h2">
+            <Typography
+              gutterBottom
+              variant="display2"
+              component="h2"
+              style={{ color: "green" }}
+            >
               UserName
             </Typography>
-            <Typography component="p">User description</Typography>
+            <Typography component="p" style={{ color: "yellow" }}>
+              User description
+            </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
+        <CardActions className={classes.button}>
+          <Button className={classes.button}>Share</Button>
           {/* <Button size="small" color="primary" justify="center">
           Learn More
         </Button> */}

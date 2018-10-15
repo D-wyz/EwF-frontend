@@ -14,16 +14,12 @@ import Paper from "@material-ui/core/Paper/Paper";
 
 const styles = theme => ({
   root: {
-    width: "100%",
-    maxWidth: 360,
+    margin: 20,
+    maxWidth: 350,
     backgroundColor: theme.palette.background.paper
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4
-  },
-  challengeList: {
-    maxWidth: "none",
-    width: "100%"
   }
 });
 
@@ -40,7 +36,7 @@ class ScoreboardList extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div style={{ marginLeft: 1030 }} className={classes.root}>
+      <div className={classes.root}>
         <Paper>
           <Card>
             <List
@@ -48,7 +44,6 @@ class ScoreboardList extends React.Component {
               subheader={
                 <ListSubheader component="div" style={{ fontSize: "24px" }}>
                   <Typography
-                    fontWeightRegular="400"
                     component="h1"
                     variant="display1"
                     gutterBottom
@@ -58,11 +53,6 @@ class ScoreboardList extends React.Component {
                   </Typography>
                 </ListSubheader>
               }
-              style={{
-                maxWidth: "100%",
-                maxwidth: "100%",
-                fontSize: "bold 24px"
-              }}
             >
               <Button onClick={this.handleClick} href="http://www.google.com">
                 <ListItem button onClick={this.handleClick}>

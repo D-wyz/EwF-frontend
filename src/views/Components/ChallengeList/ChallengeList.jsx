@@ -17,9 +17,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    maxWidth: 350,
+    margin: 20,
+    display: "grid",
+    justifycontent: "flex-end"
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4
@@ -51,38 +52,28 @@ class ChallengeList extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div
-        style={{ marginLeft: 1030, marginBottom: 30 }}
-        className={classes.root}
-      >
+      <div className={classes.root}>
         <Card>
           <List
             component="nav"
             subheader={
               <ListSubheader component="div" style={{ fontSize: "24px" }}>
-                <Typography
-                  fontWeightRegular="400"
-                  component="h1"
-                  variant="display1"
-                  gutterBottom
-                  style={{ borderBottom: "solid 1px", marginTop: "30px" }}
-                >
+                <Typography component="h1" variant="display1">
                   Challenges
                 </Typography>
               </ListSubheader>
             }
-            style={{
-              maxWidth: "100%",
-              maxwidth: "100%",
-              fontSize: "bold 24px"
-            }}
           >
             <Button onClick={this.handleClick} href="http://www.google.com">
               <ListItem button onClick={this.handleClick}>
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
-                <ListItemText inset primary="Challenge 1" />
+                <ListItemText
+                  inset
+                  primary="Challenge 1"
+                  style={{ width: 115 }}
+                />
                 <Tooltip title="Delete">
                   <IconButton aria-label="Delete">
                     <DeleteIcon />
@@ -101,7 +92,11 @@ class ChallengeList extends React.Component {
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
-                <ListItemText inset primary="Challenge 2" />
+                <ListItemText
+                  inset
+                  primary="Challenge 2"
+                  style={{ width: 115 }}
+                />
                 <Tooltip title="Delete">
                   <IconButton aria-label="Delete">
                     <DeleteIcon />
@@ -119,7 +114,11 @@ class ChallengeList extends React.Component {
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
-                <ListItemText inset primary="Challenge 3" />
+                <ListItemText
+                  inset
+                  primary="Challenge 3"
+                  style={{ width: 115 }}
+                />
                 <Tooltip title="Delete">
                   <IconButton aria-label="Delete">
                     <DeleteIcon />
