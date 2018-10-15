@@ -8,10 +8,11 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+
 const styles = {
   card: {
-    width: 351,
-    margin: 20,
+    maxWidth: 350,
+    margin: 50,
     display: "grid",
     justify: "right",
     alignItems: "flex-end",
@@ -23,17 +24,19 @@ const styles = {
     // justify: "center",
     // alignContent: "flex-end",
     // alignContent: "flex-end"
-  },
-  button: {
-    color: "red",
-    width: 332
   }
 };
+
 function MediaCard(props) {
   const { classes } = props;
   return (
-    <div>
-      <Card className={classes.card}>
+    <div style={{ marginLeft: 975 }}>
+      <Card
+        className={classes.card}
+        margin="30px"
+        maxWidth="100%"
+        maxHeight="100%"
+      >
         <CardActionArea>
           <CardMedia
             className={classes.media}
@@ -41,21 +44,16 @@ function MediaCard(props) {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography
-              gutterBottom
-              variant="display2"
-              component="h2"
-              style={{ color: "green" }}
-            >
+            <Typography gutterBottom variant="display2" component="h2">
               UserName
             </Typography>
-            <Typography component="p" style={{ color: "yellow" }}>
-              User description
-            </Typography>
+            <Typography component="p">User description</Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions className={classes.button}>
-          <Button className={classes.button}>Share</Button>
+        <CardActions>
+          <Button size="small" color="primary">
+            Share
+          </Button>
           {/* <Button size="small" color="primary" justify="center">
           Learn More
         </Button> */}
@@ -64,7 +62,9 @@ function MediaCard(props) {
     </div>
   );
 }
+
 MediaCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
 export default withStyles(styles)(MediaCard);

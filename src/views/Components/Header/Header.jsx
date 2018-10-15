@@ -8,7 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 // import Button from "components/CustomButtons/Button.jsx";
@@ -29,7 +32,10 @@ const styles = {
 
 function ButtonAppBar(props) {
   const { classes } = props;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
   return (
     <div className={classes.root}>
       <AppBar position="static">
