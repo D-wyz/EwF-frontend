@@ -8,37 +8,40 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import ProfileCard from "../ProfileCard/ProfileCard";
 
 const styles = {
   card: {
-    marginRight: 20,
-    height: 500,
-    width: 350,
-    marginTop: 30,
-    textAlign: "-webkit-centerd"
-    // display: "flex",
-    // justifycontent: "space-between",
+    maxWidth: 400,
+    maxHeight: 400,
+    margin: 50,
+    display: "grid",
+    justify: "right",
+    alignItems: "flex-end",
+    alignContent: "flex-end"
   },
   media: {
-    height: 200,
-    marginRight: 0
-    // display: "flex",
-    // justify: "center"
-    // alignContent: "flex-end",
-    // alignContent: "flex-end"
+    height: 400,
+    width: 400,
+    display: "grid",
+    justify: "left",
+    alignItems: "flex-start",
+    alignContent: "flex-start"
   }
 };
 
-function MediaCard(props) {
+function MapCard(props) {
   const { classes } = props;
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <Card
-        className={classes.card}
-        // margin="30px"
-        // maxwidth="70%"
-        // maxheight="70%"
-      >
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between"
+      }}
+    >
+      <Card className={classes.card} style={{ justifycontent: "center" }}>
+        // margin="30px" // maxWidth="100%" // maxHeight="100%"
         <CardActionArea>
           <CardMedia
             className={classes.media}
@@ -49,7 +52,6 @@ function MediaCard(props) {
             <Typography gutterBottom variant="display2" component="h2">
               UserName
             </Typography>
-            <Typography component="p">User description</Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
@@ -61,12 +63,14 @@ function MediaCard(props) {
         </Button> */}
         </CardActions>
       </Card>
+
+      <ProfileCard />
     </div>
   );
 }
 
-MediaCard.propTypes = {
+MapCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MediaCard);
+export default withStyles(styles)(MapCard);

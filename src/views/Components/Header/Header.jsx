@@ -12,6 +12,9 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 // import Button from "components/CustomButtons/Button.jsx";
 import { Apps, CloudDownload } from "@material-ui/icons";
+import CreateUserWrapped from "../Modal/createUser";
+import LoginUserWrapped from "../Modal/createUser";
+import FormDialog from "../formDialog/formDialog";
 
 const styles = {
   root: {
@@ -32,14 +35,6 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-          >
-            <MenuIcon />
-          </IconButton>
-
           <Typography
             variant="display1"
             color="inherit"
@@ -47,8 +42,8 @@ function ButtonAppBar(props) {
           >
             Class Project
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Logout</Button>
+          <FormDialog />
+          {/* <LoginUserWrapped /> */}
         </Toolbar>
       </AppBar>
     </div>
