@@ -8,6 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import Image from "material-ui-image";
 
 const styles = {
   card: {
@@ -15,8 +17,8 @@ const styles = {
     height: 500,
     width: 350,
     marginTop: 30,
-    textAlign: "-webkit-centerd"
-    // display: "flex",
+
+    display: "grid"
     // justifycontent: "space-between",
   },
   media: {
@@ -26,33 +28,32 @@ const styles = {
     // justify: "center"
     // alignContent: "flex-end",
     // alignContent: "flex-end"
-  }
+  },
+  image: {}
 };
 
 function MediaCard(props) {
   const { classes } = props;
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <Card
-        className={classes.card}
-        // margin="30px"
-        // maxwidth="70%"
-        // maxheight="70%"
-      >
+      <Card className={classes.card}>
         <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image="/static/images/cards/contemplative-reptile.jpg"
-            title="Contemplative Reptile"
-          />
+          <CardMedia className={classes.image}>
+            <Image src="https://images.pexels.com/photos/1144173/pexels-photo-1144173.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350" />
+          </CardMedia>
           <CardContent>
-            <Typography gutterBottom variant="display2" component="h2">
+            <Typography gutterBottom variant="display1" component="h6">
               UserName
             </Typography>
-            <Typography component="p">User description</Typography>
+            <Typography component="p">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis
+              blanditiis incidunt quas inventore vel obcaecati itaque autem a
+              saepe repellendus esse ullam, unde quam, porro soluta quod libero
+              voluptatum magnam.
+            </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
+        <CardActions style={{ display: "grid", alignItems: "center" }}>
           <Button size="small" color="primary">
             Share
           </Button>

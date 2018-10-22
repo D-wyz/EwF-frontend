@@ -52,19 +52,21 @@ class ScoreboardList extends React.Component {
                     component="h1"
                     variant="display1"
                     gutterBottom
-                    style={{ borderBottom: "solid 1px", marginTop: "30px" }}
+                    style={{
+                      borderBottom: "solid 1px",
+                      marginTop: "30px"
+                    }}
                   >
                     ScoreBoard
                   </Typography>
                 </ListSubheader>
               }
-              style={{
-                maxWidth: "100%",
-                maxwidth: "100%",
-                fontSize: "bold 24px"
-              }}
             >
-              <Button onClick={this.handleClick} href="http://www.google.com">
+              <Button
+                onClick={this.handleClick}
+                className={classes.button}
+                href="http://www.google.com"
+              >
                 <ListItem button onClick={this.handleClick}>
                   <ListItemIcon>
                     <StarBorder />

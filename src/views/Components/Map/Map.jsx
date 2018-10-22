@@ -41,7 +41,6 @@ function MapCard(props) {
       }}
     >
       <Card className={classes.card} style={{ justifycontent: "center" }}>
-        // margin="30px" // maxWidth="100%" // maxHeight="100%"
         <CardActionArea>
           <CardMedia
             className={classes.media}
@@ -50,7 +49,7 @@ function MapCard(props) {
           />
           <CardContent>
             <Typography gutterBottom variant="display2" component="h2">
-              UserName
+              Map Goes Here
             </Typography>
           </CardContent>
         </CardActionArea>

@@ -36,6 +36,16 @@ const styles = theme => ({
     position: "absolute",
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3
+  },
+  button: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    borderRadius: 3,
+    border: 0,
+    color: "white",
+    height: 48,
+    padding: "0 6px",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    margin: "2px"
   }
 });
 
@@ -64,7 +74,11 @@ class ChallengeList extends React.Component {
               </ListSubheader>
             }
           >
-            <Button onClick={this.handleClick} href="http://www.google.com">
+            <Button
+              onClick={this.handleClick}
+              className={classes.button}
+              href="http://www.google.com"
+            >
               <ListItem button onClick={this.handleClick}>
                 <ListItemIcon>
                   <StarBorder />
@@ -87,7 +101,11 @@ class ChallengeList extends React.Component {
               </ListItem>
             </Button>
 
-            <Button onClick={this.handleClick} href="http://www.google.com">
+            <Button
+              onClick={this.handleClick}
+              className={classes.button}
+              href="http://www.google.com"
+            >
               <ListItem button>
                 <ListItemIcon>
                   <StarBorder />
@@ -109,7 +127,11 @@ class ChallengeList extends React.Component {
                 </Tooltip>
               </ListItem>
             </Button>
-            <Button onClick={this.handleClick} href="http://www.google.com">
+            <Button
+              onClick={this.handleClick}
+              className={classes.button}
+              href="http://www.google.com"
+            >
               <ListItem button onClick={this.handleClick}>
                 <ListItemIcon>
                   <StarBorder />

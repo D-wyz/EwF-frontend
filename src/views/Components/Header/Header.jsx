@@ -18,7 +18,8 @@ import FormDialog from "../formDialog/formDialog";
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundColor: "red"
   },
   grow: {
     flexGrow: 1
@@ -33,7 +34,7 @@ function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: "indigo" }}>
         <Toolbar>
           <Typography
             variant="display1"
