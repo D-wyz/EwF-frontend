@@ -31,7 +31,7 @@ const styles = theme => ({
     padding: "0 6px",
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     margin: "2px",
-    width: "a"
+    width: "342px"
   }
 });
 

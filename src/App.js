@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import Header from "./views/Components/Header/Header";
-import ProfileCard from "./views/Components/ProfileCard/ProfileCard";
 import ChallengeList from "./views/Components/ChallengeList/ChallengeList";
 import ScoreboardList from "./views/Components/ScoreboadList/ScoreboardList";
 import MapCard from "./views/Components/Map/Map";
 import Grid from "@material-ui/core/Grid";
-
 import "./App.css";
 
 class App extends Component {
