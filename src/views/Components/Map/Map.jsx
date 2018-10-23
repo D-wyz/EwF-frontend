@@ -17,7 +17,7 @@ const styles = {
     height: "495px"
   },
   media: {
-    height: 381,
+    height: 447,
     width: 800,
     display: "grid",
     alignItems: "flex-start",

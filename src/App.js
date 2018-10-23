@@ -14,12 +14,7 @@ class App extends Component {
           <Grid item lg={12} sm={"auto"}>
             <Header />
           </Grid>
-          <Grid
-            style={{
-              width: "100%",
-              backgroundImage: "profile-bg.jpg"
-            }}
-          >
+          <Grid style={{ width: "100%", backgroundImage: "profile-bg.jpg" }}>
             <Grid container1>
               <Grid
                 item
