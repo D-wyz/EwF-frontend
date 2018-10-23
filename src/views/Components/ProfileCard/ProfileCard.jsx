@@ -41,10 +41,24 @@ function MediaCard(props) {
             <Image src="https://images.pexels.com/photos/1144173/pexels-photo-1144173.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350" />
           </CardMedia>
           <CardContent>
-            <Typography gutterBottom variant="display1" component="h6">
+            <Typography
+              gutterBottom
+              variant="display1"
+              component="h6"
+              style={{
+                background: "linear-gradient(90deg, #FE6B8B 0%, #FF8E53 100%)"
+              }}
+            >
               UserName
             </Typography>
-            <Typography component="p">
+            <Typography
+              component="p"
+              style={{
+                background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+                height: "80px",
+                overflow: "auto"
+              }}
+            >
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis
               blanditiis incidunt quas inventore vel obcaecati itaque autem a
               saepe repellendus esse ullam, unde quam, porro soluta quod libero
