@@ -4,27 +4,22 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import ProfileCard from "../ProfileCard/ProfileCard";
 
 const styles = {
   card: {
-    maxWidth: 400,
-    maxHeight: 400,
     margin: 50,
     display: "grid",
-    justify: "right",
     alignItems: "flex-end",
-    alignContent: "flex-end"
+    alignContent: "flex-end",
+    height: "495px"
   },
   media: {
-    height: 400,
-    width: 400,
+    height: 381,
+    width: 800,
     display: "grid",
-    justify: "left",
     alignItems: "flex-start",
     alignContent: "flex-start"
   }
@@ -47,11 +42,11 @@ function MapCard(props) {
             image="/static/images/cards/contemplative-reptile.jpg"
             title="Contemplative Reptile"
           />
-          <CardContent>
+          {/* <CardContent>
             <Typography gutterBottom variant="display2" component="h2">
               Map Goes Here
             </Typography>
-          </CardContent>
+          </CardContent> */}
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary">

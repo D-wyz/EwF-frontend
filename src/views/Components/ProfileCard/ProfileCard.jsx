@@ -15,7 +15,7 @@ const styles = {
     marginRight: 20,
     height: 500,
     width: 350,
-    marginTop: 30,
+    marginTop: 46,
 
     display: "grid"
     // justifycontent: "space-between",
@@ -34,7 +34,7 @@ const styles = {
 function MediaCard(props) {
   const { classes } = props;
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div style={{ display: "flex" }}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia className={classes.image}>
