@@ -1,57 +1,55 @@
-import React, { Component } from "react";
-import Header from "./views/Components/Header/Header";
-import ChallengeList from "./views/Components/ChallengeList/ChallengeList";
-import ScoreboardList from "./views/Components/ScoreboadList/ScoreboardList";
-import MapCard from "./views/Components/Map/Map";
-import Grid from "@material-ui/core/Grid";
-import "./App.css";
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+
+import setAuthToken from './utils/setAuthToken';
+
+import { Nav, Home, Home2, Register, Login } from './components/layout';
+
+import { setCurrentUser, logoutUser, clearCurrentProfile } from './actions';
+
+import store from './stores';
+
+// Check for token
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  setAuthToken(localStorage.jwtToken);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(localStorage.jwtToken);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Clear current Profile
+    store.dispatch(clearCurrentProfile());
+    // Redirect to login
+    window.location.href = '/users/login';
+  }
+}
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Grid container spacing={0}>
-          <Grid item lg={12} sm={"auto"}>
-            <Header />
-          </Grid>
-          <Grid style={{ width: "100%", backgroundImage: "profile-bg.jpg" }}>
-            <Grid container1>
-              <Grid
-                item
-                sm
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <MapCard />
-              </Grid>
-            </Grid>
-            <Grid container2>
-              <Grid
-                item
-                sm
-                style={{ display: "grid", justifyContent: "flex-end" }}
-              />
-            </Grid>
-            <Grid container>
-              <Grid
-                item
-                sm
-                style={{ display: "grid", justifyContent: "flex-end" }}
-              >
-                <ChallengeList />
-              </Grid>
-            </Grid>
-            <Grid container>
-              <Grid
-                item
-                sm
-                style={{ display: "grid", justifyContent: "flex-end" }}
-              >
-                <ScoreboardList />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
+      <Provider store={store}>
+        <Router>
+          <div>
+            <Nav />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/users/home" component={Home2} />
+
+              <Route exact path="/users/register" component={Register} />
+              <Route exact path="/users/login" component={Login} />
+            </Switch>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
