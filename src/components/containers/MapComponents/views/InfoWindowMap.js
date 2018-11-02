@@ -25,17 +25,19 @@ class InfoWindowMap extends Component {
           lat: this.props.lat,
           lng: this.props.lng
         }}
+        icon={this.props.icon}
         onClick={this.handleToggle}
       >
         {this.state.isOpen && (
           <InfoWindow onCloseClick={() => this.setState({ isOpen: false })}>
             <div>
-              {this.props.title}{this.props.title2}
+              <strong>{this.props.title}{this.props.title2}</strong>
               <hr />
               {this.props.info}
               <hr />
-              {/* need to pass in team id here, not sure how to get it */}
-              <button onClick={checkChallenge.bind(this, this.props.index, this.props.lat, this.props.lng, this.props.title)}>Check in</button>
+              <img src={`/images/${this.props.pic}`} height="100" width="100" alt='Image Not Loaded' />
+              <br />
+              <button onClick={checkChallenge.bind(this, this.props.index, this.props.lat, this.props.lng, this.props.title, this.props.teamId)}>Check in</button>
             </div>
           </InfoWindow>
         )}
@@ -55,9 +57,3 @@ const stateToProps = state => {
 export default connect(
   stateToProps,
   null)(InfoWindowMap);
-
-  //how do I make the nameOfPlace match up with the appropriate address.
-  //if(nameofplace[])
-  // for(let i =0; i< this.props.map.nameOfPlace; i++){
-
-  // }

@@ -20,68 +20,68 @@ export const getAddress = (address) => dispatch => {
 }
 
 //this whole function is janky af sorry bout it
-export const checkChallenge = (id, latChallenge, lngChallenge, title) => {
+export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) => {
   getCurrentLocation()
     .then(location => {
       let latCurrentLocation = location.latitude;
       let lngCurrentLocation = location.longitude;
       let latDiff = Math.abs(latChallenge - latCurrentLocation);
       let lngDiff = Math.abs(lngChallenge - lngCurrentLocation);
-      if (lngCurrentLocation === lngChallenge && latCurrentLocation === latChallenge){
+      if (lngCurrentLocation === lngChallenge && latCurrentLocation === latChallenge) {
         console.log('same location')
         return
-      } else if (latDiff <0.1 && lngDiff < 0.1){
+      } else if (latDiff < 0.1 && lngDiff < 0.1) {
         console.log("checking in!")
         //Make a put request to update the database with 'true' for the relevant challenge
-        if(title.endsWith(1)){
+        if (title.endsWith(1)) {
           let newChallenge = {
-              compelete: true
-        }
+            compelete: true
+          }
           Axios.put(`/teams/updateTeam`, {
-            id: '5bd731c744955203f5018e84',
+            id: teamID,
             challenge1: newChallenge
           })
-          .then(response => {
-            //run a score update function here
-            //remove the challenge from the array?
-            console.log(response);
-                })
-          .catch(error => {
-            console.log(error);
-                });
-        } else if(title.endsWith(2)){
+            .then(response => {
+              //run a score update function here
+              //remove the challenge from the array?
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else if (title.endsWith(2)) {
           let newChallenge = {
-              compelete: true
-        }
+            compelete: true
+          }
           Axios.put(`/teams/updateTeam`, {
-            id: '5bd731c744955203f5018e84',
+            id: teamID,
             challenge2: newChallenge
           })
-          .then(response => {
-            //run a score update function here
-            console.log(response);
-                })
-          .catch(error => {
-            console.log(error);
-                });
-        } else if (title.endsWith(3)){
-                  let newChallenge = {
-                      compelete: true
-                }
-                //the team id is currently hardcoded, which is an issue. i think we can pull it from the navbar JJ is working on,
-                //and then pass it in from there, but i cant do that until compiled with the navbar.
-                  Axios.put(`/teams/updateTeam`, {
-                    id: '5bd731c744955203f5018e84',
-                    challenge3: newChallenge
-                  })
-                  .then(response => {
-                    //run a score update function here?
-                    console.log(response);
-                        })
-                  .catch(error => {
-                    console.log(error);
-                        });
-                } else {
+            .then(response => {
+              //run a score update function here
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else if (title.endsWith(3)) {
+          let newChallenge = {
+            compelete: true
+          }
+          //the team id is currently hardcoded, which is an issue. i think we can pull it from the navbar JJ is working on,
+          //and then pass it in from there, but i cant do that until compiled with the navbar.
+          Axios.put(`/teams/updateTeam`, {
+            id: teamID,
+            challenge3: newChallenge
+          })
+            .then(response => {
+              //run a score update function here?
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
           console.log('not a challenge')
           return
         }
@@ -108,7 +108,8 @@ export const getUserCurrentLocation = () => dispatch => {
     })
 }
 
-export const getTeam = (team) => dispatch => {
+export const getTeam = (teamId) => dispatch => {
+  console.log(teamId);
   Axios
     .get(`/teams/getteam?id=5bd731c744955203f5018e84`)
     .then(team => {
@@ -135,28 +136,6 @@ export const getTeam = (team) => dispatch => {
     })
 }
 
-// export const getTeamInfo = (team) => dispatch => {
-//   Axios
-//     .get(`/teams/getteam?id=5bd21691581e2a170b9b90cc`)
-//     .then(team => {
-//       console.log(team.data.payload.challenge1)
-//       dispatch({
-//         type: CHALLENGE1_NAME,
-//         payload: team.data.payload.challenge1
-//       })
-//       dispatch({
-//         // type: CHALLENGE2_NAME,
-//         // payload: team.data.payload.challenge1.name
-//       })
-//       dispatch({
-//         // type: CHALLENGE3_NAME,
-//         // payload: team.data.payload.challenge1.name
-//       })
-//     })
-//     .catch(error => {
-//       console.log(error)
-//     })
-// }
 
 export const getUser = (user) => dispatch => {
   Axios
