@@ -20,7 +20,7 @@ export const getAddress = (address) => dispatch => {
 }
 
 //this whole function is janky af sorry bout it
-export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) => {
+export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID, teamName) => {
   getCurrentLocation()
     .then(location => {
       let latCurrentLocation = location.latitude;
@@ -30,9 +30,8 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
       if (lngCurrentLocation === lngChallenge && latCurrentLocation === latChallenge) {
         console.log('same location')
         return
-      } else if (latDiff < 0.1 && lngDiff < 0.1) {
+      } else if (latDiff < 1.1 && lngDiff < 1.1) {
         console.log("checking in!")
-        //Make a put request to update the database with 'true' for the relevant challenge
         if (title.endsWith(1)) {
           let newChallenge = {
             complete: true
@@ -42,8 +41,6 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
             challenge1: newChallenge
           })
             .then(response => {
-              //run a score update function here
-              //remove the challenge from the array?
               console.log(response);
             })
             .catch(error => {
