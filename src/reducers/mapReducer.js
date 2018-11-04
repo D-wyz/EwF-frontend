@@ -80,20 +80,19 @@ export default (state = initialState, action) => {
       return updated;
 
     case ADD_TEAM_ADDRESS:
-      console.log(action.payload)
-      let addTeam = [];
-      let annoyedArray4 = [];
-      annoyedArray4.push(action.payload)
-      console.log(annoyedArray4)
-      annoyedArray4.map((item, index) => {
-        let position = {};
-        // console.log(item.currentPostion.position[0])
-        position.lat = item.users[0].currentPostion.position[0]
-        position.lng = item.users[0].currentPostion.position[1]
-        position.name = item.users[0].username
-        position.team = item.teamName
-        addTeam.push({ position })
-      })
+    let addTeam = [];
+    let annoyedArray4 = [];
+    annoyedArray4.push(action.payload)
+    let usersArray = annoyedArray4[0].users
+    for (let i = 0; i < usersArray.length; i++) {
+    let position = {};
+    position.lat = usersArray[i].currentPostion.position[0]
+    position.lng = usersArray[i].currentPostion.position[1]
+    position.name = usersArray[i].username
+    position.picture = usersArray[i].userPicture
+    position.team = annoyedArray4[0].teamName
+    addTeam.push({ position })
+    }
       const newAddedTeammate = updated.allLocations.concat(addTeam)
       updated.allLocations = newAddedTeammate;
       return updated;
