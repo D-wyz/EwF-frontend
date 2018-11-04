@@ -20,7 +20,7 @@ export const getAddress = (address) => dispatch => {
 }
 
 //this whole function is janky af sorry bout it
-export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID, teamName) => {
+export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) => {
   getCurrentLocation()
     .then(location => {
       let latCurrentLocation = location.latitude;
@@ -30,7 +30,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID, te
       if (lngCurrentLocation === lngChallenge && latCurrentLocation === latChallenge) {
         console.log('same location')
         return
-      } else if (latDiff < 1.1 && lngDiff < 1.1) {
+      } else if (latDiff < 0.1 && lngDiff < 0.1) {
         console.log("checking in!")
         if (title.endsWith(1)) {
           let newChallenge = {

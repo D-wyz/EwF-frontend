@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Marker, InfoWindow } from 'react-google-maps';
-import { checkChallenge, getTeam } from '../../../../actions/locationAction';
+import { checkChallenge } from '../../../../actions/locationAction';
 
 
 class InfoWindowMap extends Component {
