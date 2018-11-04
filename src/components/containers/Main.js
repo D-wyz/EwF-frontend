@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MapContainer from './MapComponents/MapContainer';
 import Input from './MapComponents/Input';
 import Search from './MapComponents/Search';
 import { getUserCurrentLocation } from '../../actions/locationAction';
@@ -25,7 +24,7 @@ class Main extends Component {
                 </h2>
               </header>
               <span className="image featured">
-                <img src="/images/pic04.jpg" alt="" />
+                <img src="/images/hero.jpg" alt="" />
               </span>
               <h3>And yeah, that's basically it</h3>
               <Search />

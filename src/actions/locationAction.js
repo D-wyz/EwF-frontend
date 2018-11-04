@@ -35,7 +35,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
         //Make a put request to update the database with 'true' for the relevant challenge
         if (title.endsWith(1)) {
           let newChallenge = {
-            compelete: true
+            complete: true
           }
           Axios.put(`/teams/updateTeam`, {
             id: teamID,
@@ -51,7 +51,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
             });
         } else if (title.endsWith(2)) {
           let newChallenge = {
-            compelete: true
+            complete: true
           }
           Axios.put(`/teams/updateTeam`, {
             id: teamID,
@@ -66,7 +66,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
             });
         } else if (title.endsWith(3)) {
           let newChallenge = {
-            compelete: true
+            complete: true
           }
           //the team id is currently hardcoded, which is an issue. i think we can pull it from the navbar JJ is working on,
           //and then pass it in from there, but i cant do that until compiled with the navbar.
@@ -108,10 +108,9 @@ export const getUserCurrentLocation = () => dispatch => {
     })
 }
 
-export const getTeam = (teamId) => dispatch => {
-  console.log(teamId);
+export const getTeam = (team) => dispatch => {
   Axios
-    .get(`/teams/getteam?id=5bd731c744955203f5018e84`)
+  .get(`/teams/getteam?id=${team}`)
     .then(team => {
       console.log(team.data.payload)
       dispatch({

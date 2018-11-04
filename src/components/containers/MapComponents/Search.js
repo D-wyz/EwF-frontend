@@ -15,9 +15,8 @@ class Search extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
-    //need team ID for this function call
-    this.props.getTeam();
+    const teamID = this.props.auth.user.teamData._id
+    this.props.getTeam(teamID);
 
   }
 
@@ -44,7 +43,8 @@ class Search extends Component {
 
 const stateToProps = state => {
   return {
-    map: state.map
+    map: state.map,
+    auth: state.auth
   };
 };
 
