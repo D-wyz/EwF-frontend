@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { Marker, InfoWindow } from 'react-google-maps';
 import { checkChallenge } from '../../../../actions/locationAction';
 
+
 class InfoWindowMap extends Component {
   state = {
     isOpen: false,
     test: 'working!'
   };
-
+  
   handleToggle = () => {
     this.setState({
       isOpen: true
@@ -36,7 +37,7 @@ class InfoWindowMap extends Component {
               <hr />
               <img src={`/images/${this.props.pic}`} height="100" width="100" alt='Image Not Loaded' />
               <br />
-              <button onClick={checkChallenge.bind(this, this.props.index, this.props.lat, this.props.lng, this.props.title, this.props.teamId)}>Check in</button>
+              <button onClick={checkChallenge.bind(this, this.props.index, this.props.lat, this.props.lng, this.props.title, this.props.auth.user.teamData._id)}>Check in</button>
             </div>
           </InfoWindow>
         )}
@@ -49,7 +50,8 @@ const stateToProps = state => {
   return {
     isOpen: state.isOpen,
     test: state.test,
-    map: state.map
+    map: state.map,
+    auth: state.auth
   };
 };
 

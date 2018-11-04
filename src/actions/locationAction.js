@@ -32,7 +32,6 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
         return
       } else if (latDiff < 0.1 && lngDiff < 0.1) {
         console.log("checking in!")
-        //Make a put request to update the database with 'true' for the relevant challenge
         if (title.endsWith(1)) {
           let newChallenge = {
             complete: true
@@ -42,8 +41,6 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
             challenge1: newChallenge
           })
             .then(response => {
-              //run a score update function here
-              //remove the challenge from the array?
               console.log(response);
             })
             .catch(error => {

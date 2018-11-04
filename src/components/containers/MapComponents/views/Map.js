@@ -46,7 +46,7 @@ class Map extends Component {
       let name = item.position.name;
       let title = item.position.challenge
       let title2 = item.position.team
-      return <InfoWindowMap key={index} lat={lat} lng={lng} info={name} title={title} title2={title2} />;
+      return <InfoWindowMap key={index} lat={lat} lng={lng} info={name} title={title} title2={title2}/>;
     })
 
     return (
