@@ -228,7 +228,9 @@ class Nav extends Component {
   componentDidMount() {
     this.props.getAllUsers();
     this.props.getAllTeams();
-    this.props.getUserDB(this.props.auth.user.id);
+    if (this.props.auth.isAuthenticated) {
+      this.props.getUserDB(this.props.auth.user.id);
+    }
   }
 
   render() {

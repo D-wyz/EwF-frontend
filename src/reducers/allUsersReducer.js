@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_USERS:
       let users = [];
-      users = action.payload.data.payload.map(index => index.username);
+      users = action.payload.data.payload.map(index => index);
       updated.allUsers = users;
 
       return updated;
