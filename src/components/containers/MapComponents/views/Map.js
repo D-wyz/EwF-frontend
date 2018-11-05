@@ -33,20 +33,21 @@ class Map extends Component {
 
     let markersMap;
 
-    // markersMap = markers.map((marker, index) => {
-    //   const lat = marker.position.lat;
-    //   const lng = marker.position.lng;
-    //   return <InfoWindowMap key={index} lat={lat} lng={lng} />;
-    // });
-
-    console.log(this.props.map.allLocations)
     markersMap = this.props.map.allLocations.map((item, index) => {
       let lat = item.position.lat;
       let lng = item.position.lng;
       let name = item.position.name;
       let title = item.position.challenge
       let title2 = item.position.team
-      return <InfoWindowMap key={index} lat={lat} lng={lng} info={name} title={title} title2={title2}/>;
+      let pic = item.position.picture
+      let iconColor;
+      if (item.position.hasOwnProperty('challenge')) {
+        iconColor = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+      } else {
+        iconColor = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+      }
+      let teamId = item.position.teamId;
+      return <InfoWindowMap key={index} lat={lat} lng={lng} info={name} title={title} title2={title2} pic={pic} icon={iconColor} teamId={teamId} />;
     })
 
     return (
