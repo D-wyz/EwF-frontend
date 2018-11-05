@@ -157,7 +157,7 @@ class Nav extends Component {
     data.team = this.props.auth.user.teamData._id;
     data.user = this.state.selectedUserId;
     this.setState({
-      selectedUserObject: null,
+      selectedUserObject: {userScore:0},
       selectedUserId: "",
       selectedUserName: ""
     });

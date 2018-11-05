@@ -38,7 +38,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
           }
           Axios.put(`/teams/updateTeam`, {
             id: teamID,
-            challenge1: newChallenge
+            "challenge1.complete": true
           })
             .then(response => {
               console.log(response);
@@ -52,7 +52,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
           }
           Axios.put(`/teams/updateTeam`, {
             id: teamID,
-            challenge2: newChallenge
+            "challenge2.complete": true
           })
             .then(response => {
               //run a score update function here
@@ -69,7 +69,7 @@ export const checkChallenge = (id, latChallenge, lngChallenge, title, teamID) =>
           //and then pass it in from there, but i cant do that until compiled with the navbar.
           Axios.put(`/teams/updateTeam`, {
             id: teamID,
-            challenge3: newChallenge
+            "challenge3.complete": true
           })
             .then(response => {
               //run a score update function here?
