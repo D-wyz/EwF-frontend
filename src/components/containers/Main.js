@@ -16,17 +16,9 @@ class Main extends Component {
         <div className="container">
           <div id="content">
             <article className="box post">
-              <header>
-                <h2>
-                  Behold! This is the <strong>no sidebar</strong> layout
-                  <br />
-                  with no sidebar at all!
-                </h2>
-              </header>
               <span className="image featured">
                 <img src="/images/hero.jpg" alt="" />
               </span>
-              <h3>And yeah, that's basically it</h3>
               <Search />
               {/* <p>
                 Phasellus laoreet massa id justo mattis pharetra. Fusce suscipit
