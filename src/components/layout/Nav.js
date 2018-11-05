@@ -328,6 +328,7 @@ class Nav extends Component {
     //   console.log(teamName);
     // }
     ////////////////////////////////////////////////////////
+
     return (
       <React.Fragment>
         <SideSheet
@@ -364,9 +365,9 @@ class Nav extends Component {
                 <strong>Current Team</strong>
                 <br />
                 {this.props.auth.isAuthenticated &&
-                this.props.auth.user.teamData !== null &&
-                this.props.userDB.userData !== null &&
-                this.props.userDB.userData.teamData !== undefined
+                  this.props.auth.user.teamData !== null &&
+                  this.props.userDB.userData !== null &&
+                  this.props.userDB.userData.teamData !== undefined
                   ? this.props.userDB.userData.teamData.teamName
                   : "No Team Data"}
                 <br />
@@ -422,15 +423,15 @@ class Nav extends Component {
                 <select onChange={this.onTeammatesDropDownSelected}>
                   <option value="default">Select Teammates:</option>
                   {this.props.auth.isAuthenticated == true &&
-                  this.props.auth.user.teamData !== undefined &&
-                  this.props.userDB.userData !== null
+                    this.props.auth.user.teamData !== undefined &&
+                    this.props.userDB.userData !== null
                     ? this.props.userDB.userData.teamData.users.map(
-                        (item, index) => (
-                          <option key={index} value={JSON.stringify(item)}>
-                            {item.username}
-                          </option>
-                        )
+                      (item, index) => (
+                        <option key={index} value={JSON.stringify(item)}>
+                          {item.username}
+                        </option>
                       )
+                    )
                     : "No Teammates...sorry bro"}
                 </select>
                 <br />
@@ -490,10 +491,10 @@ class Nav extends Component {
                   <option value="default">Select Team:</option>
                   {this.props.allTeams.allTeams
                     ? this.props.allTeams.allTeams.map((object, index) => (
-                        <option key={index} value={JSON.stringify(object)}>
-                          {object.teamName}
-                        </option>
-                      ))
+                      <option key={index} value={JSON.stringify(object)}>
+                        {object.teamName}
+                      </option>
+                    ))
                     : ""}
                 </select>
 
@@ -531,14 +532,14 @@ class Nav extends Component {
                   <br />
                   {this.state.selectedTeamObject.users
                     ? this.state.selectedTeamObject.users.map(users => {
-                        console.log("USERS: ", users);
-                        return (
-                          <span>
-                            {users.username}
-                            <br />
-                          </span>
-                        );
-                      })
+                      console.log("USERS: ", users);
+                      return (
+                        <span>
+                          {users.username}
+                          <br />
+                        </span>
+                      );
+                    })
                     : "nothing"}
                   <Text>
                     Challenge 1:{" "}
@@ -576,10 +577,10 @@ class Nav extends Component {
                   <option value="default">Select User:</option>
                   {this.props.allUsers.allUsers
                     ? this.props.allUsers.allUsers.map((object, index) => (
-                        <option key={index} value={JSON.stringify(object)}>
-                          {object.username}
-                        </option>
-                      ))
+                      <option key={index} value={JSON.stringify(object)}>
+                        {object.username}
+                      </option>
+                    ))
                     : ""}
                 </select>
                 <br />
@@ -633,7 +634,7 @@ class Nav extends Component {
                 justifyContent={"center"}
                 alignItems={"center"}
                 flexGrow={2}>
-                ADVERTISEMENT
+                <a href="sexy"><img src="/images/singles.png" height="100%" width="100%" className="advert" /></a>
               </Pane>
             </Pane>
           </Pane>
