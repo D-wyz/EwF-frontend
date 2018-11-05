@@ -29,7 +29,8 @@ import {
   TextInput,
   SelectMenu,
   Checkbox,
-  Menu
+  Menu,
+  Dialog
 } from "evergreen-ui";
 
 class Nav extends Component {
@@ -56,6 +57,7 @@ class Nav extends Component {
     selectedTeammateObject: {},
     selectedTeammateId: "",
     selectedTeammateName: "",
+    teamDialogInfoIsShown: false,
     teamName: "",
     teammateMenuSelected: ""
     //teammateDropdownSelected: []
@@ -180,6 +182,7 @@ class Nav extends Component {
     }
     if (e.target.value !== "default") {
       let obj = JSON.parse(e.target.value);
+      console.log("TEAM OBJECT: ", obj);
       this.setState({
         selectedTeamObject: obj,
         selectedTeamId: obj._id,
@@ -239,6 +242,7 @@ class Nav extends Component {
     // }
 
     const { isAuthenticated, user } = this.props.auth;
+    const { userPicture } = this.props.auth.user.userData;
 
     //const currentTeam = <span>{this.props.userDB.userData.team.teamName}</span>;
 
@@ -320,14 +324,19 @@ class Nav extends Component {
                 Information for {"<"} {user.username} {">"}
               </Heading>
               <Paragraph size={400} color="muted">
-                <strong>CurrentTeam</strong>
+                {/* <strong>CurrentTeam</strong>
                 <br />
                 {this.props.auth.isAuthenticated &&
                 this.props.auth.user.teamData !== null
                   ? this.props.auth.user.teamData.teamName
-                  : "No Team"}
+                  : "No Team"} */}
                 <br />
-                <strong>Other CurrentTeam</strong>
+                <img
+                  style={{ width: 100, height: 100 }}
+                  src={`${__dirname}images${userPicture}`}
+                />
+                <br />
+                <strong>Current Team</strong>
                 <br />
                 {this.props.auth.isAuthenticated &&
                 this.props.auth.user.teamData !== null &&
@@ -432,6 +441,36 @@ class Nav extends Component {
                 onClick={this.joinTeamClick}
                 disabled={this.state.selectedTeamName ? false : true}>
                 Join Team
+              </Button>
+              <br />
+              <Dialog
+                isShown={this.state.teamDialogInfoIsShown}
+                title={`Team ${this.state.selectedTeamName}`}
+                onCloseComplete={() =>
+                  this.setState({ teamDialogInfoIsShown: false })
+                }
+                hasFooter={false}>
+                Team&nbsp;
+                {this.state.selectedTeamObject.teamName}
+                &nbsp;consists of:
+                <br />
+                {this.state.selectedTeamObject.users
+                  ? this.state.selectedTeamObject.users.map(users => {
+                      console.log("USERS: ", users);
+                      return (
+                        <span>
+                          {users.username}
+                          <br />
+                        </span>
+                      );
+                    })
+                  : "nothing"}
+              </Dialog>
+              <Button
+                onClick={() => this.setState({ teamDialogInfoIsShown: true })}
+                disabled={this.state.selectedTeamName ? false : true}
+                appearance="primary">
+                Get Team Info
               </Button>
             </Pane>
 
