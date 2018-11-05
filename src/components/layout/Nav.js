@@ -13,7 +13,8 @@ import {
   getTeam,
   addUser,
   removeUser,
-  loginUser
+  loginUser,
+  setCurrentUser
 } from "../../actions";
 import {
   Button,
@@ -45,6 +46,9 @@ class Nav extends Component {
     selectedTeam: false,
     joinedTeam: "",
     newDropDownSelected: "",
+    selectedUserObject: {},
+    selectedUserId: "",
+    selectedUserName: "",
     selectedTeamObject: {},
     selectedTeamId: "",
     selectedTeamName: "",
@@ -79,17 +83,13 @@ class Nav extends Component {
       id: this.props.auth.user.id,
       locationToUpdate: currentLocation
     };
-    console.log("Updating DB with: ", data);
     this.props.updateUserLoc(data);
   };
 
   handleRemoveTeammate = () => {
-    let userObj = JSON.parse(this.state.teammateMenuSelected);
     let data = {};
-    data.team = userObj.team;
-    data.user = userObj._id;
-    console.log(data);
-
+    data.team = this.state.selectedTeammateObject.team;
+    data.user = this.state.selectedTeammateObject._id;
     axiosPut("/edit/removeuser", data)
       .then(data => {
         console.log("REMOVED USER, ", data);
@@ -98,14 +98,15 @@ class Nav extends Component {
         console.log("RemoveUser Error: ", error);
       });
 
-    this.setState({ teammateMenuSelected: "" });
+    this.setState({
+      selectedTeammateObject: {},
+      selectedTeammateId: "",
+      selectedTeammateName: ""
+    });
 
-    const userData = {
-      // email: this.props.auth.user.email,
-      // password: this.props.auth.user
-    };
-
-    this.props.loginUser(userData);
+    this.props.getAllUsers();
+    this.props.getAllTeams();
+    this.props.getUserDB(this.props.auth.user.id);
   };
 
   toggleSuccess = () => {
@@ -130,19 +131,36 @@ class Nav extends Component {
     data.user = this.props.auth.user.id;
 
     this.props.joinTeam(data);
+
+    this.props.getAllUsers();
+    this.props.getAllTeams();
+  };
+
+  bringUserToTeam = () => {
+    let data = {};
+    data.team = this.props.auth.user.teamData._id;
+    data.user = this.state.selectedUserId;
+    this.setState({
+      selectedUserObject: null,
+      selectedUserId: "",
+      selectedUserName: ""
+    });
+    this.props.joinTeam(data);
+    this.props.getAllUsers();
+    this.props.getAllTeams();
+    this.props.getUserDB(this.props.auth.user.id);
   };
 
   onTeammatesDropDownSelected = e => {
     if (e.target.value == "default") {
       this.setState({
         selectedTeammateObject: null,
-        selectedTeammateId: null,
-        selectedTeammateUserName: null
+        selectedTeammateId: "",
+        selectedTeammateName: ""
       });
     }
     if (e.target.value !== "default") {
       let obj = JSON.parse(e.target.value);
-      console.log("Parsed object: ", obj);
       this.setState({
         selectedTeammateObject: obj,
         selectedTeammateId: obj._id,
@@ -152,7 +170,6 @@ class Nav extends Component {
   };
 
   onTeamDropDownSelected = e => {
-    console.log("Selected value: ", e.target.value);
     if (e.target.value == "default") {
       this.setState({
         selectedTeamObject: null,
@@ -163,12 +180,30 @@ class Nav extends Component {
     }
     if (e.target.value !== "default") {
       let obj = JSON.parse(e.target.value);
-      console.log("Parsed object: ", obj);
       this.setState({
         selectedTeamObject: obj,
         selectedTeamId: obj._id,
         selectedTeamName: obj.teamName,
         selectedTeamUsers: obj.users
+      });
+    }
+  };
+
+  onUserDropDownSelected = e => {
+    if (e.target.value == "default") {
+      this.setState({
+        selectedUserObject: {},
+        selectedUserId: "",
+        selectedUserName: ""
+      });
+    }
+
+    if (e.target.value !== "default") {
+      let obj = JSON.parse(e.target.value);
+      this.setState({
+        selectedUserObject: obj,
+        selectedUserId: obj._id,
+        selectedUserName: obj.username
       });
     }
   };
@@ -193,6 +228,7 @@ class Nav extends Component {
   componentDidMount() {
     this.props.getAllUsers();
     this.props.getAllTeams();
+    this.props.getUserDB(this.props.auth.user.id);
   }
 
   render() {
@@ -246,21 +282,21 @@ class Nav extends Component {
     // } else {
     //   teamName = '';
     // }
+    ////////////////////////////////////////////////////////
+    // let teamName;
 
-    let teamName;
+    // if (this.props.userDB.userData !== null) {
+    //   teamName = this.props.userDB.userData.team.teamName;
+    // } else {
+    //   teamName = '';
+    // }
 
-    if (this.props.userDB.userData !== null) {
-      teamName = this.props.userDB.userData.team.teamName;
-    } else {
-      teamName = "";
-    }
-
-    if (this.props.userDB.userData === null) {
-      teamName = localStorage.getItem("user");
-      console.log(JSON.stringify(localStorage.getItem("user")));
-      console.log(teamName);
-    }
-
+    // if (this.props.userDB.userData === null) {
+    //   teamName = localStorage.getItem('user');
+    //   console.log(JSON.stringify(localStorage.getItem('user')));
+    //   console.log(teamName);
+    // }
+    ////////////////////////////////////////////////////////
     return (
       <React.Fragment>
         <SideSheet
@@ -288,6 +324,15 @@ class Nav extends Component {
                 this.props.auth.user.teamData !== null
                   ? this.props.auth.user.teamData.teamName
                   : "No Team"}
+                <br />
+                <strong>Other CurrentTeam</strong>
+                <br />
+                {this.props.auth.isAuthenticated &&
+                this.props.auth.user.teamData !== null &&
+                this.props.userDB.userData !== null &&
+                this.props.userDB.userData.teamData !== undefined
+                  ? this.props.userDB.userData.teamData.teamName
+                  : "No Team Data"}
                 <br />
                 <strong>CurrentLocation</strong>
                 <br />
@@ -334,32 +379,30 @@ class Nav extends Component {
               paddingLeft={10}
               paddingRight={10}>
               <Text>
-                <strong>TeamInfo</strong>
+                <strong>Teammate Pane</strong>
               </Text>
               <br />
-              <Pane>
-                <select onChange={this.onTeammatesDropDownSelected}>
-                  <option value="default">Select Teammates:</option>
-                  {this.props.auth.isAuthenticated == true &&
-                  this.props.auth.user.teamData !== null
-                    ? this.props.auth.user.teamData.users.map((item, index) => (
+              <select onChange={this.onTeammatesDropDownSelected}>
+                <option value="default">Select Teammates:</option>
+                {this.props.auth.isAuthenticated == true &&
+                this.props.auth.user.teamData !== undefined &&
+                this.props.userDB.userData !== null
+                  ? this.props.userDB.userData.teamData.users.map(
+                      (item, index) => (
                         <option key={index} value={JSON.stringify(item)}>
                           {item.username}
                         </option>
-                      ))
-                    : "No Teammates...sorry bro"}
-                </select>
-
-                <br />
-                <Button
-                  onClick={this.handleRemoveTeammate}
-                  disabled={
-                    this.state.selectedTeammateName !== "" ? false : true
-                  }
-                  appearance="primary">
-                  Remove Teammate
-                </Button>
-              </Pane>
+                      )
+                    )
+                  : "No Teammates...sorry bro"}
+              </select>
+              <br />
+              <Button
+                onClick={this.handleRemoveTeammate}
+                disabled={this.state.selectedTeammateName !== "" ? false : true}
+                appearance="primary">
+                Remove Teammate
+              </Button>
             </Pane>
 
             <Pane
@@ -396,9 +439,25 @@ class Nav extends Component {
               elevation={2}
               paddingLeft={10}
               paddingRight={10}>
-              <Text>Users:</Text>
-
+              <Text>User Pane</Text>
               <br />
+              <select onChange={this.onUserDropDownSelected}>
+                <option value="default">Select User:</option>
+                {this.props.allUsers.allUsers
+                  ? this.props.allUsers.allUsers.map((object, index) => (
+                      <option key={index} value={JSON.stringify(object)}>
+                        {object.username}
+                      </option>
+                    ))
+                  : ""}
+              </select>
+              <br />
+              <Button
+                appearance="primary"
+                onClick={this.bringUserToTeam}
+                disabled={this.state.selectedUserName ? false : true}>
+                Add User To Team
+              </Button>
             </Pane>
           </Pane>
         </SideSheet>
@@ -432,7 +491,8 @@ export default connect(
     getTeam,
     addUser,
     removeUser,
-    loginUser
+    loginUser,
+    setCurrentUser
   }
 )(Nav);
 
