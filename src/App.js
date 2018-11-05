@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 
 import setAuthToken from './utils/setAuthToken';
 
-import { Nav, Home, Home2, Register, Login } from './components/layout';
+import { Nav, Home, Home2, Register, Login, sexy } from './components/layout';
 
 import { setCurrentUser, logoutUser, clearCurrentProfile } from './actions';
 
@@ -43,6 +43,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/users/home" component={Home2} />
+              <Route exact path="/users/sexy" component={sexy} />
 
               <Route exact path="/users/register" component={Register} />
               <Route exact path="/users/login" component={Login} />
