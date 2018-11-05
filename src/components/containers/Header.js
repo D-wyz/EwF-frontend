@@ -8,9 +8,9 @@ class Header extends Component {
       <section id="header">
         <div className="container">
           <h1 id="logo">
-            Scoring With Friends
+            Exploring With Friends
           </h1>
-          <p>Because life is about winning</p>
+          <p>Where will you go?</p>
           <Nav />
         </div>
       </section>
