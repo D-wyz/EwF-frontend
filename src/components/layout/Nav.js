@@ -50,14 +50,23 @@ class Nav extends Component {
     selectedUserObject: {},
     selectedUserId: "",
     selectedUserName: "",
-    selectedTeamObject: {},
+    selectedTeamObject: {
+      teamScore: 0,
+      challenge1: { name: "" },
+      challenge2: { name: "" },
+      challenge3: { name: "" }
+    },
     selectedTeamId: "",
     selectedTeamName: "",
     selectedTeamUsers: [],
-    selectedTeammateObject: {},
+    selectedTeammateObject: {
+      userScore: 0,
+      currentPosition: { name: "", position: ["0", "0"] }
+    },
     selectedTeammateId: "",
     selectedTeammateName: "",
     teamDialogInfoIsShown: false,
+    teammateDialogInfoIsShown: false,
     teamName: "",
     teammateMenuSelected: ""
     //teammateDropdownSelected: []
@@ -136,6 +145,7 @@ class Nav extends Component {
 
     this.props.getAllUsers();
     this.props.getAllTeams();
+    this.props.getUserDB(this.props.auth.user.id);
   };
 
   bringUserToTeam = () => {
@@ -156,13 +166,18 @@ class Nav extends Component {
   onTeammatesDropDownSelected = e => {
     if (e.target.value == "default") {
       this.setState({
-        selectedTeammateObject: null,
+        selectedTeammateObject: {
+          userScore: 0,
+          currentPosition: { name: "", position: ["0", "0"] }
+        },
         selectedTeammateId: "",
         selectedTeammateName: ""
       });
     }
     if (e.target.value !== "default") {
       let obj = JSON.parse(e.target.value);
+      console.log("Teammate Object-----", obj);
+
       this.setState({
         selectedTeammateObject: obj,
         selectedTeammateId: obj._id,
@@ -174,7 +189,12 @@ class Nav extends Component {
   onTeamDropDownSelected = e => {
     if (e.target.value == "default") {
       this.setState({
-        selectedTeamObject: null,
+        selectedTeamObject: {
+          teamScore: 0,
+          challenge1: { name: "" },
+          challenge2: { name: "" },
+          challenge3: { name: "" }
+        },
         selectedTeamId: null,
         selectedTeamName: null,
         selectedTeamUsers: null
@@ -183,12 +203,14 @@ class Nav extends Component {
     if (e.target.value !== "default") {
       let obj = JSON.parse(e.target.value);
       console.log("TEAM OBJECT: ", obj);
+      console.log("Challenge Name: ", obj.challenge1.name);
       this.setState({
         selectedTeamObject: obj,
         selectedTeamId: obj._id,
         selectedTeamName: obj.teamName,
         selectedTeamUsers: obj.users
       });
+      console.log("Challenge Name2: ", this.state.selectedTeamObject);
     }
   };
 
@@ -242,7 +264,6 @@ class Nav extends Component {
     // }
 
     const { isAuthenticated, user } = this.props.auth;
-    const { userPicture } = this.props.auth.user.userData;
 
     //const currentTeam = <span>{this.props.userDB.userData.team.teamName}</span>;
 
@@ -333,7 +354,7 @@ class Nav extends Component {
                 <br />
                 <img
                   style={{ width: 100, height: 100 }}
-                  src={`${__dirname}images${userPicture}`}
+                  src="/images/anon.png"
                 />
                 <br />
                 <strong>Current Team</strong>
@@ -411,11 +432,42 @@ class Nav extends Component {
               <Button
                 onClick={this.handleRemoveTeammate}
                 disabled={this.state.selectedTeammateName !== "" ? false : true}
-                appearance="primary">
+                appearance="primary"
+                intent="danger">
                 Remove Teammate
               </Button>
-            </Pane>
 
+              <Dialog
+                isShown={this.state.teammateDialogInfoIsShown}
+                title={
+                  <div>
+                    <Heading>{this.state.selectedTeammateName}</Heading>
+                    <Text>
+                      Score: {this.state.selectedTeammateObject.userScore}
+                    </Text>
+                  </div>
+                }
+                onCloseComplete={() =>
+                  this.setState({ teammateDialogInfoIsShown: false })
+                }
+                hasFooter={false}>
+                <img
+                  style={{ width: 100, height: 100 }}
+                  src="/images/anon.png"
+                />
+              </Dialog>
+              <br />
+              <br />
+              <Button
+                onClick={() => {
+                  this.setState({ teammateDialogInfoIsShown: true });
+                }}
+                disabled={this.state.selectedTeammateName !== "" ? false : true}
+                appearance="primary"
+                intent="default">
+                Get Teammate Info
+              </Button>
+            </Pane>
             <Pane
               marginRight={10}
               marginLeft={10}
@@ -438,6 +490,7 @@ class Nav extends Component {
               <br />
               <Button
                 appearance="primary"
+                intent="success"
                 onClick={this.joinTeamClick}
                 disabled={this.state.selectedTeamName ? false : true}>
                 Join Team
@@ -445,7 +498,19 @@ class Nav extends Component {
               <br />
               <Dialog
                 isShown={this.state.teamDialogInfoIsShown}
-                title={`Team ${this.state.selectedTeamName}`}
+                title={
+                  <div>
+                    <Heading>Team {this.state.selectedTeamName}</Heading>
+                    <Text>
+                      Score: {this.state.selectedTeamObject.teamScore}
+                    </Text>
+                  </div>
+                }
+                // title={`Team ${
+                //   this.state.selectedTeamName
+                // }  --- Score: ${
+                //   this.state.selectedTeamObject.teamScore
+                // }`}
                 onCloseComplete={() =>
                   this.setState({ teamDialogInfoIsShown: false })
                 }
@@ -465,7 +530,22 @@ class Nav extends Component {
                       );
                     })
                   : "nothing"}
+                <Text>
+                  Challenge 1:{" "}
+                  {this.state.selectedTeamObject
+                    ? this.state.selectedTeamObject.challenge1.name
+                    : "nothing"}
+                </Text>
+                <br />
+                <Text>
+                  Challenge 2: {this.state.selectedTeamObject.challenge2.name}
+                </Text>
+                <br />
+                <Text>
+                  Challenge 3: {this.state.selectedTeamObject.challenge2.name}
+                </Text>
               </Dialog>
+              <br />
               <Button
                 onClick={() => this.setState({ teamDialogInfoIsShown: true })}
                 disabled={this.state.selectedTeamName ? false : true}
@@ -495,6 +575,7 @@ class Nav extends Component {
               <br />
               <Button
                 appearance="primary"
+                intent="success"
                 onClick={this.bringUserToTeam}
                 disabled={this.state.selectedUserName ? false : true}>
                 Add User To Team

@@ -34,7 +34,7 @@ const Axios = axios.create({
   }
 });
 export const addUser = data => {
-  axiosPost("/teams/adduser", data)
+  axiosPost("/edit/adduser", data)
     .then(data => {
       console.log("ADDED USER, ", data);
     })
@@ -44,7 +44,7 @@ export const addUser = data => {
 };
 
 export const removeUser = data => {
-  axiosPost("/teams/removeuser", data)
+  axiosPost("/edit/removeuser", data)
     .then(data => {
       console.log("REMOVED USER, ", data);
     })
