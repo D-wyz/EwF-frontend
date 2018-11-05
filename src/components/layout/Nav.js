@@ -47,7 +47,10 @@ class Nav extends Component {
     selectedTeam: false,
     joinedTeam: "",
     newDropDownSelected: "",
-    selectedUserObject: {},
+    selectedUserObject: {
+      userScore: 0,
+      currentPosition: { name: "", position: ["0", "0"] }
+    },
     selectedUserId: "",
     selectedUserName: "",
     selectedTeamObject: {
@@ -67,6 +70,7 @@ class Nav extends Component {
     selectedTeammateName: "",
     teamDialogInfoIsShown: false,
     teammateDialogInfoIsShown: false,
+    userDialogInfoIsShown: false,
     teamName: "",
     teammateMenuSelected: ""
     //teammateDropdownSelected: []
@@ -403,183 +407,234 @@ class Nav extends Component {
               <br />
               <span>{this.state.updatedShown ? this.state.updated : ""}</span>
             </Pane>
-
-            <Pane
-              marginRight={10}
-              marginLeft={10}
-              elevation={2}
-              paddingLeft={10}
-              paddingRight={10}>
-              <Text>
-                <strong>Teammate Pane</strong>
-              </Text>
-              <br />
-              <select onChange={this.onTeammatesDropDownSelected}>
-                <option value="default">Select Teammates:</option>
-                {this.props.auth.isAuthenticated == true &&
-                this.props.auth.user.teamData !== undefined &&
-                this.props.userDB.userData !== null
-                  ? this.props.userDB.userData.teamData.users.map(
-                      (item, index) => (
-                        <option key={index} value={JSON.stringify(item)}>
-                          {item.username}
-                        </option>
+            <Pane display="flex" justifyContent={"space-evenly"}>
+              <Pane
+                marginRight={10}
+                marginLeft={10}
+                elevation={2}
+                paddingLeft={10}
+                paddingRight={10}
+                flexGrow={1}>
+                <Text>
+                  <strong>Teammate Pane</strong>
+                </Text>
+                <br />
+                <select onChange={this.onTeammatesDropDownSelected}>
+                  <option value="default">Select Teammates:</option>
+                  {this.props.auth.isAuthenticated == true &&
+                  this.props.auth.user.teamData !== undefined &&
+                  this.props.userDB.userData !== null
+                    ? this.props.userDB.userData.teamData.users.map(
+                        (item, index) => (
+                          <option key={index} value={JSON.stringify(item)}>
+                            {item.username}
+                          </option>
+                        )
                       )
-                    )
-                  : "No Teammates...sorry bro"}
-              </select>
-              <br />
-              <Button
-                onClick={this.handleRemoveTeammate}
-                disabled={this.state.selectedTeammateName !== "" ? false : true}
-                appearance="primary"
-                intent="danger">
-                Remove Teammate
-              </Button>
-
-              <Dialog
-                isShown={this.state.teammateDialogInfoIsShown}
-                title={
-                  <div>
-                    <Heading>{this.state.selectedTeammateName}</Heading>
-                    <Text>
-                      Score: {this.state.selectedTeammateObject.userScore}
-                    </Text>
-                  </div>
-                }
-                onCloseComplete={() =>
-                  this.setState({ teammateDialogInfoIsShown: false })
-                }
-                hasFooter={false}>
-                <img
-                  style={{ width: 100, height: 100 }}
-                  src="/images/anon.png"
-                />
-              </Dialog>
-              <br />
-              <br />
-              <Button
-                onClick={() => {
-                  this.setState({ teammateDialogInfoIsShown: true });
-                }}
-                disabled={this.state.selectedTeammateName !== "" ? false : true}
-                appearance="primary"
-                intent="default">
-                Get Teammate Info
-              </Button>
-            </Pane>
-            <Pane
-              marginRight={10}
-              marginLeft={10}
-              elevation={2}
-              paddingLeft={10}
-              paddingRight={10}>
-              <Text>Team Pane</Text>
-              <br />
-              <select onChange={this.onTeamDropDownSelected}>
-                <option value="default">Select Team:</option>
-                {this.props.allTeams.allTeams
-                  ? this.props.allTeams.allTeams.map((object, index) => (
-                      <option key={index} value={JSON.stringify(object)}>
-                        {object.teamName}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-
-              <br />
-              <Button
-                appearance="primary"
-                intent="success"
-                onClick={this.joinTeamClick}
-                disabled={this.state.selectedTeamName ? false : true}>
-                Join Team
-              </Button>
-              <br />
-              <Dialog
-                isShown={this.state.teamDialogInfoIsShown}
-                title={
-                  <div>
-                    <Heading>Team {this.state.selectedTeamName}</Heading>
-                    <Text>
-                      Score: {this.state.selectedTeamObject.teamScore}
-                    </Text>
-                  </div>
-                }
-                // title={`Team ${
-                //   this.state.selectedTeamName
-                // }  --- Score: ${
-                //   this.state.selectedTeamObject.teamScore
-                // }`}
-                onCloseComplete={() =>
-                  this.setState({ teamDialogInfoIsShown: false })
-                }
-                hasFooter={false}>
-                Team&nbsp;
-                {this.state.selectedTeamObject.teamName}
-                &nbsp;consists of:
+                    : "No Teammates...sorry bro"}
+                </select>
                 <br />
-                {this.state.selectedTeamObject.users
-                  ? this.state.selectedTeamObject.users.map(users => {
-                      console.log("USERS: ", users);
-                      return (
-                        <span>
-                          {users.username}
-                          <br />
-                        </span>
-                      );
-                    })
-                  : "nothing"}
-                <Text>
-                  Challenge 1:{" "}
-                  {this.state.selectedTeamObject
-                    ? this.state.selectedTeamObject.challenge1.name
+                <Button
+                  onClick={this.handleRemoveTeammate}
+                  disabled={
+                    this.state.selectedTeammateName !== "" ? false : true
+                  }
+                  appearance="primary"
+                  intent="danger">
+                  Remove Teammate
+                </Button>
+
+                <Dialog
+                  isShown={this.state.teammateDialogInfoIsShown}
+                  title={
+                    <div>
+                      <Heading>{this.state.selectedTeammateName}</Heading>
+                      <Text>
+                        Score: {this.state.selectedTeammateObject.userScore}
+                      </Text>
+                    </div>
+                  }
+                  onCloseComplete={() =>
+                    this.setState({ teammateDialogInfoIsShown: false })
+                  }
+                  hasFooter={false}>
+                  <img
+                    style={{ width: 100, height: 100 }}
+                    src="/images/anon.png"
+                  />
+                </Dialog>
+                <br />
+                <br />
+                <Button
+                  onClick={() => {
+                    this.setState({ teammateDialogInfoIsShown: true });
+                  }}
+                  disabled={
+                    this.state.selectedTeammateName !== "" ? false : true
+                  }
+                  appearance="primary"
+                  intent="default">
+                  Get Teammate Info
+                </Button>
+              </Pane>
+              <Pane
+                marginRight={10}
+                marginLeft={10}
+                elevation={2}
+                paddingLeft={10}
+                paddingRight={10}
+                flexGrow={1}>
+                <Text>Team Pane</Text>
+                <br />
+                <select onChange={this.onTeamDropDownSelected}>
+                  <option value="default">Select Team:</option>
+                  {this.props.allTeams.allTeams
+                    ? this.props.allTeams.allTeams.map((object, index) => (
+                        <option key={index} value={JSON.stringify(object)}>
+                          {object.teamName}
+                        </option>
+                      ))
+                    : ""}
+                </select>
+
+                <br />
+                <Button
+                  appearance="primary"
+                  intent="success"
+                  onClick={this.joinTeamClick}
+                  disabled={this.state.selectedTeamName ? false : true}>
+                  Join Team
+                </Button>
+                <br />
+                <Dialog
+                  isShown={this.state.teamDialogInfoIsShown}
+                  title={
+                    <div>
+                      <Heading>Team {this.state.selectedTeamName}</Heading>
+                      <Text>
+                        Score: {this.state.selectedTeamObject.teamScore}
+                      </Text>
+                    </div>
+                  }
+                  // title={`Team ${
+                  //   this.state.selectedTeamName
+                  // }  --- Score: ${
+                  //   this.state.selectedTeamObject.teamScore
+                  // }`}
+                  onCloseComplete={() =>
+                    this.setState({ teamDialogInfoIsShown: false })
+                  }
+                  hasFooter={false}>
+                  Team&nbsp;
+                  {this.state.selectedTeamObject.teamName}
+                  &nbsp;consists of:
+                  <br />
+                  {this.state.selectedTeamObject.users
+                    ? this.state.selectedTeamObject.users.map(users => {
+                        console.log("USERS: ", users);
+                        return (
+                          <span>
+                            {users.username}
+                            <br />
+                          </span>
+                        );
+                      })
                     : "nothing"}
-                </Text>
+                  <Text>
+                    Challenge 1:{" "}
+                    {this.state.selectedTeamObject
+                      ? this.state.selectedTeamObject.challenge1.name
+                      : "nothing"}
+                  </Text>
+                  <br />
+                  <Text>
+                    Challenge 2: {this.state.selectedTeamObject.challenge2.name}
+                  </Text>
+                  <br />
+                  <Text>
+                    Challenge 3: {this.state.selectedTeamObject.challenge2.name}
+                  </Text>
+                </Dialog>
                 <br />
-                <Text>
-                  Challenge 2: {this.state.selectedTeamObject.challenge2.name}
-                </Text>
+                <Button
+                  onClick={() => this.setState({ teamDialogInfoIsShown: true })}
+                  disabled={this.state.selectedTeamName ? false : true}
+                  appearance="primary">
+                  Get Team Info
+                </Button>
+              </Pane>
+              <Pane
+                marginRight={10}
+                marginLeft={10}
+                elevation={2}
+                paddingLeft={10}
+                paddingRight={10}
+                flexGrow={1}>
+                <Text>User Pane</Text>
                 <br />
-                <Text>
-                  Challenge 3: {this.state.selectedTeamObject.challenge2.name}
-                </Text>
-              </Dialog>
-              <br />
-              <Button
-                onClick={() => this.setState({ teamDialogInfoIsShown: true })}
-                disabled={this.state.selectedTeamName ? false : true}
-                appearance="primary">
-                Get Team Info
-              </Button>
-            </Pane>
+                <select onChange={this.onUserDropDownSelected}>
+                  <option value="default">Select User:</option>
+                  {this.props.allUsers.allUsers
+                    ? this.props.allUsers.allUsers.map((object, index) => (
+                        <option key={index} value={JSON.stringify(object)}>
+                          {object.username}
+                        </option>
+                      ))
+                    : ""}
+                </select>
+                <br />
+                <Button
+                  appearance="primary"
+                  intent="success"
+                  onClick={this.bringUserToTeam}
+                  disabled={this.state.selectedUserName ? false : true}>
+                  Add User To Team
+                </Button>
 
-            <Pane
-              marginRight={10}
-              marginLeft={10}
-              elevation={2}
-              paddingLeft={10}
-              paddingRight={10}>
-              <Text>User Pane</Text>
-              <br />
-              <select onChange={this.onUserDropDownSelected}>
-                <option value="default">Select User:</option>
-                {this.props.allUsers.allUsers
-                  ? this.props.allUsers.allUsers.map((object, index) => (
-                      <option key={index} value={JSON.stringify(object)}>
-                        {object.username}
-                      </option>
-                    ))
-                  : ""}
-              </select>
-              <br />
-              <Button
-                appearance="primary"
-                intent="success"
-                onClick={this.bringUserToTeam}
-                disabled={this.state.selectedUserName ? false : true}>
-                Add User To Team
-              </Button>
+                <Dialog
+                  isShown={this.state.userDialogInfoIsShown}
+                  title={
+                    <div>
+                      <Heading>{this.state.selectedUserName}</Heading>
+                      <Text>
+                        Score: {this.state.selectedUserObject.userScore}
+                      </Text>
+                    </div>
+                  }
+                  onCloseComplete={() =>
+                    this.setState({ userDialogInfoIsShown: false })
+                  }
+                  hasFooter={false}>
+                  <img
+                    style={{ width: 100, height: 100 }}
+                    src="/images/anon.png"
+                  />
+                </Dialog>
+                <br />
+                <br />
+                <Button
+                  onClick={() => {
+                    this.setState({ userDialogInfoIsShown: true });
+                  }}
+                  disabled={this.state.selectedUserName !== "" ? false : true}
+                  appearance="primary"
+                  intent="default">
+                  Get User Info
+                </Button>
+              </Pane>
+              <Pane
+                marginRight={10}
+                marginLeft={10}
+                elevation={2}
+                paddingLeft={10}
+                paddingRight={10}
+                minWidth={"30vw"}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                flexGrow={2}>
+                ADVERTISEMENT
+              </Pane>
             </Pane>
           </Pane>
         </SideSheet>
